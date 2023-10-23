@@ -1,0 +1,6 @@
+config BR2_PACKAGE_QBEE_AGENT
+    bool "qbee-agent"
+    help
+        The qbee-agent device management package.
+
+        https://qbee.io
