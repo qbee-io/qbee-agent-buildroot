@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-QBEE_AGENT_VERSION = 2023.42
+QBEE_AGENT_VERSION = 2023.44
 QBEE_AGENT_SOURCE = qbee-agent-$(QBEE_AGENT_VERSION).tar.gz
 QBEE_AGENT_SITE = https://cdn.qbee.io/software/qbee-agent/$(QBEE_AGENT_VERSION)/binaries
 QBEE_AGENT_LICENSE = Apache-2.0
