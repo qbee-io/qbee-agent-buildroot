@@ -1,7 +1,7 @@
 config BR2_PACKAGE_QBEE_AGENT
     bool "qbee-agent"
     depends on BR2_PACKAGE_DROPBEAR || BR2_PACKAGE_OPENSSH
-    selects BR2_PACKAGE_OPENSSH if !BR2_PACKAGE_DROPBEAR
+    select BR2_PACKAGE_OPENSSH if !BR2_PACKAGE_DROPBEAR
     help
         The qbee-agent device management package.
 
