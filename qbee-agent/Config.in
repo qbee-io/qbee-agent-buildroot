@@ -1,8 +1,16 @@
 config BR2_PACKAGE_QBEE_AGENT
     bool "qbee-agent"
-    select BR2_PACKAGE_DROPBEAR if !BR2_PACKAGE_OPENSSH
-    select BR2_PACKAGE_IPTABLES
+    select BR2_PACKAGE_DROPBEAR if !BR2_PACKAGE_OPENSSH  # runtime
+    select BR2_PACKAGE_IPTABLES  # runtime
+    select BR2_PACKAGE_BUSYBOX_SHOW_OTHERS  # runtime
+    select BR2_PACKAGE_SHADOW  # runtime
     help
-        The qbee-agent device management package.
+        Qbee is a device management platform that comprise 
+        of an open-source agent and a hosted SaaS backend. 
+        This config installs pre-built static binaries made
+        with the official public signing key for qbee.io. The
+        binaries will work seamlessly with the qbee.io device
+        management backend.
 
+        https://github.com/qbee-io/qbee-agent
         https://qbee.io
