@@ -1,41 +1,35 @@
 ################################################################################
 #
-# embeddedinn package
+# qbee-agent package
 #
 ################################################################################
 
-QBEE_AGENT_VERSION = 2023.44
-QBEE_AGENT_SOURCE = qbee-agent-$(QBEE_AGENT_VERSION).tar.gz
-QBEE_AGENT_SITE = https://cdn.qbee.io/software/qbee-agent/$(QBEE_AGENT_VERSION)/binaries
+QBEE_AGENT_VERSION = 2024.09
+QBEE_AGENT_SITE = $(call github,qbee-io,qbee-agent,$(QBEE_AGENT_VERSION))
 QBEE_AGENT_LICENSE = Apache-2.0
+QBEE_AGENT_LICENSE_FILES = LICENSE
 
-ifeq ($(BR2_arm),y)
-GO_GOARCH = arm
-else ifeq ($(BR2_aarch64),y)
-GO_GOARCH = arm64
-else ifeq ($(BR2_i386),y)
-GO_GOARCH = 386
-else ifeq ($(BR2_x86_64),y)
-GO_GOARCH = amd64
-endif
+QBEE_AGENT_COMMIT_ID = c30d43b8e64cfef960cee9475b58ae083e4ad246
 
-define QBEE_AGENT_BUILD_CMDS
-endef
+QBEE_AGENT_GOMOD = go.qbee.io/agent
+
+QBEE_AGENT_LDFLAGS = -s -w \
+	-X $(QBEE_AGENT_GOMOD)/app.Version=$(QBEE_AGENT_VERSION) \
+	-X $(QBEE_AGENT_GOMOD)/app.Commit=$(QBEE_AGENT_COMMIT_ID)
 
 define QBEE_AGENT_INSTALL_TARGET_CMDS
-    $(INSTALL) -m 0755 $(@D)/qbee-agent-$(QBEE_AGENT_VERSION)/qbee-agent-$(GO_GOARCH)  $(TARGET_DIR)/usr/bin/qbee-agent
-    $(INSTALL) -d -m 0700 $(TARGET_DIR)/etc/qbee/ppkeys
-    $(INSTALL) -m 0600 $(@D)/qbee-agent-$(QBEE_AGENT_VERSION)/share/ssl/ca.cert  $(TARGET_DIR)/etc/qbee/ppkeys/ca.cert
+	$(INSTALL) -m 0755 $(@D)/bin/qbee-agent $(TARGET_DIR)/usr/bin/qbee-agent
+	$(INSTALL) -D -m 0600 $(@D)/package/share/ssl/ca.cert $(TARGET_DIR)/etc/qbee/ppkeys/ca.cert
 endef
 
 define QBEE_AGENT_INSTALL_INIT_SYSTEMD
-    $(INSTALL) -D -m 0644 $(@D)/qbee-agent-$(QBEE_AGENT_VERSION)/init-scripts/systemd/qbee-agent.service \
-        $(TARGET_DIR)/usr/lib/systemd/system/qbee-agent.service
+	$(INSTALL) -D -m 0644 $(@D)/package/init-scripts/systemd/qbee-agent.service \
+		$(TARGET_DIR)/usr/lib/systemd/system/qbee-agent.service
 endef
 
 define QBEE_AGENT_INSTALL_INIT_SYSV
-    $(INSTALL) -D -m 755 $(@D)/qbee-agent-$(QBEE_AGENT_VERSION)/init-scripts/sysvinit/qbee-agent \
-        $(TARGET_DIR)/etc/init.d/S99qbee-agent
+	$(INSTALL) -D -m 755 $(@D)/package/init-scripts/sysvinit/qbee-agent \
+		$(TARGET_DIR)/etc/init.d/S99qbee-agent
 endef
 
-$(eval $(generic-package))
+$(eval $(golang-package))
