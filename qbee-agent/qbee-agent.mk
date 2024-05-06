@@ -4,12 +4,12 @@
 #
 ################################################################################
 
-QBEE_AGENT_VERSION = 2024.14
+QBEE_AGENT_VERSION = 2024.19
 QBEE_AGENT_SITE = $(call github,qbee-io,qbee-agent,$(QBEE_AGENT_VERSION))
 QBEE_AGENT_LICENSE = Apache-2.0
 QBEE_AGENT_LICENSE_FILES = LICENSE
 
-QBEE_AGENT_COMMIT_ID = 850d09c85c365cb423f89f9cc9adc2f52533cbf0
+QBEE_AGENT_COMMIT_ID = 9d0ed1bc1bab18c75a73dbacc2026e86113c97aa
 
 QBEE_AGENT_GOMOD = go.qbee.io/agent
 
